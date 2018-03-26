@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  background-color: #eded;
+}
+
+h1 {
+  color: gray;
+  font-size: 5em;
+  font-family: sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
