@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Image from "./images/webpack.png";
 
 export default class extends Component {
   constructor(props) {
@@ -17,8 +18,13 @@ export default class extends Component {
 
   render() {
     return (
-      <div onClick={this.onCountClick.bind(this)}>
-        <h1>Countss: {this.state.count}</h1>
+      <div onClick={this.onCountClick.bind(this)} className="container">
+        <img src={Image} alt="" />
+        <h1>{this.props.headline}</h1>
+        <h2>
+          {this.props.count}: {this.state.count}
+        </h2>
+        <p>{this.props.subline}</p>
       </div>
     );
   }

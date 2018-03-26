@@ -1,17 +1,18 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliPlugin = require("brotli-webpack-plugin");
 
 module.exports = {
   entry: {
-    main: [
-      "babel-runtime/regenerator",
-      "webpack-hot-middleware/client?reload=true",
-      "./src/main.js"
-    ]
+    main: ["./src/main.js"]
   },
-  mode: "development",
+  mode: "production",
   output: {
     filename: "[name]-bundle.js",
     path: path.resolve(__dirname, "./dist"),
@@ -37,11 +38,13 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          MiniCssExtractPlugin.loader,
           {
-            loader: "style-loader"
+            loader: "css-loader",
+            options: { minimize: true }
           },
           {
-            loader: "css-loader"
+            loader: "postcss-loader"
           }
         ]
       },
@@ -88,7 +91,10 @@ module.exports = {
         test: /\.md$/,
         use: [
           {
-            loader: "markdown-with-front-matter-loader"
+            loader: "html-loader"
+          },
+          {
+            loader: "markdown-loader"
           }
         ]
       }
@@ -96,10 +102,27 @@ module.exports = {
   },
   plugins: [
     new FriendlyErrorsWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.css$/g,
+      cssProcessor: require("cssnano"),
+      cssProcessorOptions: {
+        discardComments: {
+          removeAll: true
+        },
+        canPrint: true
+      }
+    }),
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
     new HtmlWebpackPlugin({ template: "./src/index.html" }),
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify("development")
-    })
+      "process.env": JSON.stringify("production")
+    }),
+    new UglifyJSPlugin({
+      sourceMap: true
+    }),
+    new CompressionPlugin({
+      algorithm: "gzip"
+    }),
+    new BrotliPlugin()
   ]
 };

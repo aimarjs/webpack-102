@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config=webpack.dev.config.js",
-    "build": "webpack --config=webpack.dev.config.js",
-    "dev":
-      "nodemon --inspect --watch config --watch src/server src/server/main.js",
+    "build:dev": "webpack --config=webpack.dev.config.js",
+    "build": "webpack --config=webpack.prod.config.js --env.NODE_ENV=production",
+    "dev": "nodemon --inspect --watch config --watch src/server src/server/main.js",
     "prod": "NODE_ENV=production node src/server/main.js"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
     "css-loader": "^0.28.11",
     "express": "^4.16.3",
     "extract-loader": "^2.0.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.1.0",
@@ -41,5 +42,17 @@
     "webpack-dev-server": "^3.1.1",
     "webpack-hot-middleware": "^2.21.2",
     "webpack-mild-compile": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-minify": "^0.3.0",
+    "babel-minify-webpack-plugin": "^0.3.1",
+    "brotli-webpack-plugin": "^0.5.0",
+    "compression-webpack-plugin": "^1.1.11",
+    "express-static-gzip": "^0.3.2",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "markdown-with-front-matter-loader": "^0.1.0",
+    "mini-css-extract-plugin": "^0.2.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.0",
+    "uglifyjs-webpack-plugin": "^1.2.4"
   }
 }
