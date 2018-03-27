@@ -1,6 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const externals = require('./node-externals');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const buildFolder = path.resolve(__dirname, '../build');
+
+let cleanOptions = {
+	allowExternal: true
+};
 
 module.exports = {
 	name: 'server',
@@ -54,6 +61,7 @@ module.exports = {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(buildFolder, cleanOptions),
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify('production')
 		})

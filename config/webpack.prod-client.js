@@ -7,6 +7,13 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const distFolder = path.resolve(__dirname, '../dist');
+
+let cleanOptions = {
+	allowExternal: true
+};
 
 module.exports = {
 	name: 'client',
@@ -79,6 +86,7 @@ module.exports = {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(distFolder, cleanOptions),
 		new MiniCssExtractPlugin({ filename: '[name].css' }),
 		new OptimizeCssAssetsPlugin({
 			assetNameRegExp: /\.css$/g,
