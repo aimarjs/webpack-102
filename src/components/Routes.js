@@ -1,10 +1,9 @@
 import React from "react";
 import { Route, Link } from "react-router-dom";
+import { Switch } from "react-router";
+import universal from "react-universal-component";
 
-import HomePage from "./Home";
-import AboutPage from "./About";
-import CounterPage from "./Counter";
-import PostPage from "./Post";
+const UniversalComponent = universal(props => import(`./${props.page}`));
 
 export default () => (
   <div>
@@ -14,9 +13,19 @@ export default () => (
       <Link to="/posts">Posts</Link>
       <Link to="/about">About</Link>
     </nav>
-    <Route exact path="/" component={HomePage} />
-    <Route path="/counter" component={CounterPage} />
-    <Route path="/posts" component={PostPage} />
-    <Route path="/About" component={AboutPage} />
+    <Switch>
+      <Route exact path="/">
+        <UniversalComponent page="Home" />
+      </Route>
+      <Route path="/counter">
+        <UniversalComponent page="Counter" />
+      </Route>
+      <Route path="/posts">
+        <UniversalComponent page="Post" />
+      </Route>
+      <Route path="/About">
+        <UniversalComponent page="About" />
+      </Route>
+    </Switch>
   </div>
 );
