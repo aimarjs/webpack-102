@@ -1,5 +1,5 @@
 module.exports = {
-  headline: "this is webpack 101",
+  headline: "this is webpack with SSR",
   count: "Click counter",
   subline: "click to test react"
 };

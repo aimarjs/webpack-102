@@ -1,18 +1,16 @@
 import React from "react";
-import Counter from "./counter";
+import { BrowserRouter as Router } from "react-router-dom";
 import { hot } from "react-hot-loader";
+
+import "./nav.css";
 import Data from "../data/data";
-import Post from "./post";
+
+import Routes from "./Routes";
 
 const App = () => (
-  <div>
-    <Counter
-      headline={Data.headline}
-      count={Data.count}
-      subline={Data.subline}
-    />
-    <Post />
-  </div>
+  <Router>
+    <Routes />
+  </Router>
 );
 
 export default hot(module)(App);

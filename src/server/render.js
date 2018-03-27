@@ -1,9 +1,11 @@
-const App = require('../components/app').default;
-import React from 'react';
-import { renderToString } from 'react-dom/server';
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { StaticRouter } from "react-router";
+
+import Routes from "../components/Routes";
 
 export default () => (req, res) => {
-	res.send(`
+  res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -14,7 +16,11 @@ export default () => (req, res) => {
       <title>Webpack!!</title>
     </head>
     <body>
-      <div id="root">${renderToString(<App />)}</div>
+      <div id="root">${renderToString(
+        <StaticRouter location={req.url} context={{}}>
+          <Routes />
+        </StaticRouter>
+      )}</div>
       <script src="vendors~main.js"></script>
       <script src="main.js"></script>
     </body>
