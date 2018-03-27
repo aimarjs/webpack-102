@@ -11,27 +11,16 @@ const BrotliPlugin = require('brotli-webpack-plugin');
 module.exports = {
 	name: 'client',
 	entry: {
+		vendor: ['react', 'lodash'],
 		main: ['./src/main.js']
 	},
 	mode: 'production',
 	output: {
 		filename: '[name].js',
+		chunkFilename: '[name].chunk.js',
 		path: path.resolve(__dirname, '../dist'),
 		publicPath: '/'
 	},
-	optimization: {
-		splitChunks: {
-			chunks: 'all',
-			cacheGroups: {
-				vendor: {
-					name: 'vendor',
-					chunks: 'initial',
-					minChunks: 2
-				}
-			}
-		}
-	},
-	devtool: 'source-map',
 	module: {
 		rules: [
 			{
@@ -57,19 +46,13 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.sass$/,
+				test: /\.(jpg|gif|png)$/,
 				use: [
 					{
-						loader: 'style-loader'
-					},
-					{
-						loader: 'css-loader'
-					},
-					{
-						loader: 'postcss-loader'
-					},
-					{
-						loader: 'sass-loader'
+						loader: 'file-loader',
+						options: {
+							name: 'images/[name]-[hash:8].[ext]'
+						}
 					}
 				]
 			},
@@ -79,18 +62,8 @@ module.exports = {
 					{
 						loader: 'html-loader',
 						options: {
-							attrs: ['img:src']
-						}
-					}
-				]
-			},
-			{
-				test: /\.(jpg|gif|png)$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: 'images/[name]-[hash:8].[ext]'
+							attrs: ['img:src'],
+							minimize: true
 						}
 					}
 				]
@@ -106,7 +79,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new FriendlyErrorsWebpackPlugin(),
+		new MiniCssExtractPlugin({ filename: '[name].css' }),
 		new OptimizeCssAssetsPlugin({
 			assetNameRegExp: /\.css$/g,
 			cssProcessor: require('cssnano'),
@@ -117,10 +90,11 @@ module.exports = {
 				canPrint: true
 			}
 		}),
-		new MiniCssExtractPlugin({ filename: '[name].css' }),
-		// new HtmlWebpackPlugin({ template: './src/index.html' }),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify('production')
+			'process.env': {
+				NODE_ENV: JSON.stringify('production'),
+				WEBPACK: true
+			}
 		}),
 		new UglifyJSPlugin({
 			sourceMap: true

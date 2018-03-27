@@ -1,16 +1,15 @@
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { hot } from "react-hot-loader";
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import "./nav.css";
-import Data from "../data/data";
+import './nav.css';
+import Data from '../data/data';
 
-import Routes from "./Routes";
+import Routes from './Routes';
 
 const App = () => (
-  <Router>
-    <Routes />
-  </Router>
+	<BrowserRouter>
+		<Routes />
+	</BrowserRouter>
 );
 
-export default hot(module)(App);
+export default App;

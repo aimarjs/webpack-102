@@ -1,11 +1,11 @@
-import React from "react";
-import { renderToString } from "react-dom/server";
-import { StaticRouter } from "react-router";
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { StaticRouter } from 'react-router';
 
-import Routes from "../components/Routes";
+import Routes from '../components/Routes';
 
 export default () => (req, res) => {
-  res.send(`
+	res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -17,11 +17,11 @@ export default () => (req, res) => {
     </head>
     <body>
       <div id="root">${renderToString(
-        <StaticRouter location={req.url} context={{}}>
-          <Routes />
-        </StaticRouter>
-      )}</div>
-      <script src="vendors~main.js"></script>
+				<StaticRouter location={req.url} context={{}}>
+					<Routes />
+				</StaticRouter>
+			)}</div>
+      <script src="vendor.js"></script>
       <script src="main.js"></script>
     </body>
     </html>

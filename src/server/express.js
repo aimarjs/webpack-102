@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import webpack from 'webpack';
-// import WebpackHotServerMiddleware from 'webpack-hot-server-middleware';
+import WebpackHotServerMiddleware from 'webpack-hot-server-middleware';
 
 import configDevClient from '../../config/webpack.dev-client.js';
 import configDevServer from '../../config/webpack.dev-server.js';
@@ -10,6 +10,21 @@ import configProdServer from '../../config/webpack.prod-server.js';
 
 const server = express();
 const expressStaticGzip = require('express-static-gzip');
+
+const PORT = process.env.PORT || 8000;
+let isBuilt = false;
+
+const done = () => {
+	!isBuilt &&
+		server.listen(PORT, () => {
+			isBuilt = true;
+			console.log(
+				`Server listening on http://localhost:${PORT} in ${
+					process.env.NODE_ENV
+				}`
+			);
+		});
+};
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
@@ -40,6 +55,7 @@ if (isDev) {
 	server.use(webpackHotServerMiddleware);
 	// server.use(WebpackHotServerMiddleware(compiler));
 	console.log('Middleware enabled');
+	compiler.plugin('done', done);
 } else {
 	webpack([configProdClient, configProdServer]).run((err, stats) => {
 		const render = require('../../build/prod-server-bundle.js').default;
@@ -48,13 +64,7 @@ if (isDev) {
 				enableBrotli: true
 			})
 		);
-		server.use(render());
+		server.use('*', render());
+		done();
 	});
 }
-
-const PORT = process.env.PORT || 8000;
-server.listen(PORT, () => {
-	console.log(
-		`Server listening on http://localhost:${PORT} in ${process.env.NODE_ENV}`
-	);
-});
