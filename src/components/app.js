@@ -1,4 +1,5 @@
 import React from 'react';
+import { hot } from 'react-hot-loader';
 import { BrowserRouter } from 'react-router-dom';
 
 import './nav.css';
@@ -12,4 +13,4 @@ const App = () => (
 	</BrowserRouter>
 );
 
-export default App;
+export default hot(module)(App);
