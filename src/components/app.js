@@ -1,18 +1,21 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
+import { renderRoutes } from 'react-router-config';
 
 import './nav.css';
 import Data from '../data/data';
 import Aux from '../hoc/Auxy';
 import Nav from './Nav';
 
-import Routes from './Routes';
+// import Routes from './Routes';
 
-const App = () => (
-	<Aux>
-		<Nav />
-		<Routes />
-	</Aux>
-);
+const App = ({ route }) => {
+	return (
+		<Aux>
+			<Nav />
+			{renderRoutes(route.routes)}
+		</Aux>
+	);
+};
 
-export default hot(module)(App);
+export default { component: App };

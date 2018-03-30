@@ -27,4 +27,4 @@ class CounterPage extends Component {
 	}
 }
 
-export default CounterPage;
+export default { component: CounterPage };
