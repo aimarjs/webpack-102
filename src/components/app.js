@@ -1,16 +1,18 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import { BrowserRouter } from 'react-router-dom';
 
 import './nav.css';
 import Data from '../data/data';
+import Aux from '../hoc/Auxy';
+import Nav from './Nav';
 
 import Routes from './Routes';
 
 const App = () => (
-	<BrowserRouter>
+	<Aux>
+		<Nav />
 		<Routes />
-	</BrowserRouter>
+	</Aux>
 );
 
 export default hot(module)(App);

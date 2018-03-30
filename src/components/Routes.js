@@ -10,20 +10,13 @@ import Posts from './Post';
 import About from './About';
 
 export default () => (
-	<div>
-		<nav>
-			<Link to="/">Home</Link>
-			<Link to="/counter">Counter</Link>
-			<Link to="/posts">Posts</Link>
-			<Link to="/about">About</Link>
-		</nav>
-		<Switch>
-			<Route exact path="/" component={Home} />
-			<Route path="/counter" component={Counter} />
-			<Route path="/posts" component={Posts} />
-			<Route path="/about" component={About} />
+	<Switch>
+		<Route exact path="/" component={Home} />
+		<Route path="/counter" component={Counter} />
+		<Route path="/posts" component={Posts} />
+		<Route path="/about" component={About} />
 
-			{/* <Route exact path="/">
+		{/* <Route exact path="/">
 				<UniversalComponent page="Home" />
 			</Route>
 			<Route path="/counter">
@@ -35,6 +28,5 @@ export default () => (
 			<Route path="/about">
 				<UniversalComponent page="About" />
 			</Route> */}
-		</Switch>
-	</div>
+	</Switch>
 );
