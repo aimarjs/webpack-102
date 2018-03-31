@@ -7,8 +7,6 @@ import Data from '../data/data';
 import Aux from '../hoc/Auxy';
 import Nav from './Nav';
 
-// import Routes from './Routes';
-
 const App = ({ route }) => {
 	return (
 		<Aux>

@@ -15,18 +15,6 @@ let cleanOptions = {
 	allowExternal: true
 };
 
-const VENDOR_LIBRARIES = [
-	// 'axios',
-	'react',
-	'react-dom'
-	// 'react-redux',
-	// 'react-router-config',
-	// 'react-router-dom',
-	// 'redux',
-	// 'redux-thunk',
-	// 'serialize-javascript'
-];
-
 module.exports = {
 	name: 'client',
 	entry: {
