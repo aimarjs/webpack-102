@@ -15,18 +15,34 @@ let cleanOptions = {
 	allowExternal: true
 };
 
+const VENDOR_LIBRARIES = [
+	// 'axios',
+	'react',
+	'react-dom'
+	// 'react-redux',
+	// 'react-router-config',
+	// 'react-router-dom',
+	// 'redux',
+	// 'redux-thunk',
+	// 'serialize-javascript'
+];
+
 module.exports = {
 	name: 'client',
 	entry: {
-		vendor: ['react', 'lodash'],
-		main: ['./src/main.js']
+		vendor: ['react', 'react-dom'],
+		main: './src/main.js'
 	},
 	mode: 'production',
 	output: {
 		filename: '[name].js',
 		chunkFilename: '[name].chunk.js',
-		path: path.resolve(__dirname, '../dist'),
+		path: distFolder,
 		publicPath: '/'
+	},
+	devServer: {
+		contentBase: 'dist',
+		overlay: true
 	},
 	module: {
 		rules: [

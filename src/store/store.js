@@ -8,29 +8,17 @@ const rootReducer = combineReducers({
 	team: teamReducer
 });
 
-let composeEnhancers = null;
+const composeEnhancers = composeWithDevTools(applyMiddleware(thunk));
 
-if (process.env.NODE_ENV === 'development') {
-	composeEnhancers = composeWithDevTools(applyMiddleware(thunk));
-} else {
-	composeEnhancers = applyMiddleware(thunk);
-}
+// let composeEnhancers = null;
+//
+// if (process.env.NODE_ENV === 'development') {
+// 	composeEnhancers = composeWithDevTools(applyMiddleware(thunk));
+// } else {
+// 	composeEnhancers = applyMiddleware(thunk);
+// }
 
 export default initialState => {
 	const store = createStore(rootReducer, initialState, composeEnhancers);
 	return store;
 };
-
-// const store = createStore(rootReducer, composeEnhancers);
-
-// export default store;
-
-// import { createStore, applyMiddleware } from 'redux';
-// import thunk from 'redux-thunk';
-// import reducers from '../client/reducers';
-//
-// export default () => {
-// 	const store = createStore(reducers, {}, applyMiddleware(thunk));
-//
-// 	return store;
-// };

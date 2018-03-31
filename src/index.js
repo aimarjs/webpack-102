@@ -7,7 +7,6 @@ import App from './components/App';
 import Routes from './components/Routes';
 
 import createStore from './store/store';
-// const store = createStore();
 
 const store = createStore(window.__PRELOADED_STATE__);
 

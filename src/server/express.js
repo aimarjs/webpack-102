@@ -51,7 +51,6 @@ if (isDev) {
 	server.use(webpackDevMiddleware);
 	server.use(webpackHotMiddleware);
 	server.use(webpackHotServerMiddleware);
-	console.log('Middleware enabled');
 	compiler.plugin('done', done);
 } else {
 	webpack([configProdClient, configProdServer]).run((err, stats) => {
@@ -61,7 +60,7 @@ if (isDev) {
 				enableBrotli: true
 			})
 		);
-		server.use('*', render());
+		server.use(render());
 		done();
 	});
 }

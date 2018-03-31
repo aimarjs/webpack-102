@@ -12,7 +12,7 @@ let cleanOptions = {
 module.exports = {
 	name: 'server',
 	target: 'node',
-	externals,
+	externals: externals,
 	entry: './src/server/render.js',
 	mode: 'production',
 	output: {
@@ -62,8 +62,13 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(buildFolder, cleanOptions),
+		new webpack.optimize.LimitChunkCountPlugin({
+			maxChunks: 1
+		}),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify('production')
+			'process.env': {
+				NODE_ENV: JSON.stringify('production')
+			}
 		})
 	]
 };
