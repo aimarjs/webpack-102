@@ -3,13 +3,21 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
+import flushChunks from 'webpack-flush-chunks';
+import { flushChunkNames } from 'react-universal-component/server';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 import Routes from '../components/Routes';
 import createStore from '../store/store';
 
 import App from '../components/App';
 
-export default () => (req, res) => {
+export default ({ clientStats }) => (req, res) => {
+	const { js, styles } = flushChunks(clientStats, {
+		chunkNames: flushChunkNames()
+	});
+
+	// console.log(js);
+
 	const store = createStore();
 
 	const promises = matchRoutes(Routes, req.path)
@@ -50,16 +58,15 @@ export default () => (req, res) => {
 	      <meta charset="UTF-8">
 	      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	      <link href="/main.css" rel="stylesheet" />
 	      <title>Webpack</title>
+				${styles}
 	    </head>
 	    <body>
 	      <div id="root">${content}</div>
 				<script>
 					window.__PRELOADED_STATE__ = ${serializedState}
 	      </script>
-	      <script src="vendor.js"></script>
-	      <script src="main.js"></script>
+				${js}
 	    </body>
 	    </html>
 	  `;

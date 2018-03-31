@@ -2,11 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+	.BundleAnalyzerPlugin;
 
 module.exports = {
 	name: 'client',
 	entry: {
-		vendor: ['react', 'react-dom'],
 		main: [
 			'react-hot-loader/patch',
 			'babel-runtime/regenerator',
@@ -16,8 +17,8 @@ module.exports = {
 	},
 	mode: 'development',
 	output: {
-		filename: '[name].js',
-		chunkFilename: '[name].chunk.js',
+		filename: '[name].[hash:20].js',
+		chunkFilename: '[name].js',
 		path: path.resolve(__dirname, '../dist'),
 		publicPath: '/'
 	},
@@ -26,6 +27,20 @@ module.exports = {
 		overlay: true
 	},
 	devtool: 'source-map',
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				default: false,
+				commons: {
+					test: /node_modules/,
+					name: 'vendor',
+					filename: 'vendor.[chunkhash].js',
+					chunks: 'all',
+					minSize: 1
+				}
+			}
+		}
+	},
 	module: {
 		rules: [
 			{
@@ -55,15 +70,6 @@ module.exports = {
 			{
 				test: /\.html$/,
 				use: [
-					// {
-					// 	loader: 'file-loader',
-					// 	options: {
-					// 		name: '[name].[ext]'
-					// 	}
-					// },
-					// {
-					// 	loader: 'extract-loader'
-					// },
 					{
 						loader: 'html-loader',
 						options: {
@@ -84,7 +90,7 @@ module.exports = {
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: '[name].css'
+			filename: '[name].[chunkhash].css'
 		}),
 		new webpack.DefinePlugin({
 			'process.env': {
@@ -93,6 +99,8 @@ module.exports = {
 			}
 		}),
 		new webpack.HotModuleReplacementPlugin()
+		// new BundleAnalyzerPlugin(),
+
 		// new HtmlWebpackPlugin({
 		// 	template: './src/index.html'
 		// })

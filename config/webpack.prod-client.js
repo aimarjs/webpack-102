@@ -8,6 +8,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+	.BundleAnalyzerPlugin;
 
 const distFolder = path.resolve(__dirname, '../dist');
 
@@ -18,7 +20,6 @@ let cleanOptions = {
 module.exports = {
 	name: 'client',
 	entry: {
-		vendor: ['react', 'react-dom'],
 		main: './src/main.js'
 	},
 	mode: 'production',
@@ -31,6 +32,24 @@ module.exports = {
 	devServer: {
 		contentBase: 'dist',
 		overlay: true
+	},
+	optimization: {
+		// minimize: false,
+		// runtimeChunk: {
+		// 	name: 'vendor'
+		// },
+		splitChunks: {
+			cacheGroups: {
+				default: false,
+				commons: {
+					test: /node_modules/,
+					name: 'vendor',
+					filename: 'vendor.js',
+					chunks: 'all',
+					minSize: 1
+				}
+			}
+		}
 	},
 	module: {
 		rules: [
@@ -114,6 +133,7 @@ module.exports = {
 		new CompressionPlugin({
 			algorithm: 'gzip'
 		}),
-		new BrotliPlugin()
+		new BrotliPlugin(),
+		new BundleAnalyzerPlugin()
 	]
 };
