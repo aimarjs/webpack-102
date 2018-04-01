@@ -18,9 +18,11 @@ class CounterPage extends Component {
 	render() {
 		return (
 			<div className="container">
-				<div onClick={this.onCountClick.bind(this)} className="container">
+				<div className="container">
 					<h2>Counter: {this.state.count}</h2>
-					<p>Click to test React</p>
+					<button onClick={this.onCountClick.bind(this)}>
+						Click to test React
+					</button>
 				</div>
 			</div>
 		);

@@ -7,13 +7,9 @@ class AboutPage extends Component {
 		this.props.onFetch();
 	}
 	render() {
-		let team = null;
-		if (this.props.success) {
-			team = this.props.team.members.map(member => {
-				return <div key={member._id}>{member.name}</div>;
-			});
-		}
-		return team;
+		return this.props.team.members.map(member => {
+			return <div key={member._id}>{member.name}</div>;
+		});
 	}
 }
 

@@ -24,7 +24,7 @@ module.exports = {
 	},
 	mode: 'production',
 	output: {
-		filename: '[name].js',
+		filename: '[name].[hash:20].js',
 		chunkFilename: '[name].chunk.js',
 		path: distFolder,
 		publicPath: '/'
@@ -44,7 +44,7 @@ module.exports = {
 				commons: {
 					test: /node_modules/,
 					name: 'vendor',
-					filename: 'vendor.js',
+					filename: 'vendor.[chunkhash].js',
 					chunks: 'all',
 					minSize: 1
 				}
@@ -110,7 +110,7 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(distFolder, cleanOptions),
-		new MiniCssExtractPlugin({ filename: '[name].css' }),
+		new MiniCssExtractPlugin({ filename: '[name].[chunkhash].css' }),
 		new OptimizeCssAssetsPlugin({
 			assetNameRegExp: /\.css$/g,
 			cssProcessor: require('cssnano'),

@@ -13,6 +13,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"autoprefixer": "^8.2.0",
 		"axios": "^0.18.0",
 		"express": "^4.16.3",
 		"react": "^16.3.0",
@@ -26,7 +27,6 @@
 		"serialize-javascript": "^1.4.0"
 	},
 	"devDependencies": {
-		"assets-webpack-plugin": "^3.5.1",
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.4",
 		"babel-minify": "^0.3.0",
@@ -41,9 +41,9 @@
 		"clean-webpack-plugin": "^0.1.19",
 		"compression-webpack-plugin": "^1.1.11",
 		"css-loader": "^0.28.11",
+		"cssnano": "^3.10.0",
 		"express-static-gzip": "^0.3.2",
 		"extract-loader": "^2.0.1",
-		"extract-text-webpack-plugin": "^4.0.0-beta.0",
 		"file-loader": "^1.1.11",
 		"friendly-errors-webpack-plugin": "^1.6.1",
 		"html-loader": "^0.5.5",
@@ -63,10 +63,8 @@
 		"webpack-bundle-analyzer": "^2.11.1",
 		"webpack-cli": "^2.0.13",
 		"webpack-dev-middleware": "^3.1.0",
-		"webpack-dev-server": "^3.1.1",
 		"webpack-flush-chunks": "^1.2.3",
 		"webpack-hot-middleware": "^2.21.2",
-		"webpack-hot-server-middleware": "^0.5.0",
-		"webpack-node-externals": "^1.6.0"
+		"webpack-hot-server-middleware": "^0.5.0"
 	}
 }
