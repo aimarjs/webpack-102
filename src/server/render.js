@@ -42,14 +42,14 @@ export default ({ clientStats }) => (req, res) => {
 			</Provider>
 		);
 
-		if (context.url) {
-			return res.redirect(301, context.url);
-		}
-		if (context.notFound) {
-			res.status(404);
-		}
+		// if (context.url) {
+		// 	return res.redirect(301, context.url);
+		// }
+		// if (context.notFound) {
+		// 	res.status(404);
+		// }
 
-		const serializedState = JSON.stringify(store.getState());
+		const serializedState = serialize(store.getState());
 
 		const html = `
 	    <!DOCTYPE html>
